@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 
 import "./globals.css";
 
+import { QueryProvider } from "@/components/query-provider";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -27,7 +28,9 @@ export default function RootLayout({
           inter.className,
         )}
       >
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

@@ -24,22 +24,22 @@ import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
-const formSchema = z.object({
-   email: z.string().email(),
-   password: z.string().min(8, "Minimum 8 characters are required"),
-});
+import { loginSchema } from "@/features/auth/schema";
+import { useLogin } from "@/features/auth/api/use-login";
 
 export const SignInCard = () => {
-   const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
+   const { mutate } = useLogin();
+
+   const form = useForm<z.infer<typeof loginSchema>>({
+      resolver: zodResolver(loginSchema),
       defaultValues: {
          email: "",
          password: "",
       },
    });
 
-   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-      console.log(data);
+   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+      mutate({ json: data });
    };
 
    return (

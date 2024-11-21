@@ -25,15 +25,14 @@ import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
-const formSchema = z.object({
-   name: z.string().min(3, "Minimum 3 characters are required"),
-   email: z.string().email(),
-   password: z.string().min(8, "Minimum 8 characters are required"),
-});
+import { signupSchema } from "@/features/auth/schema";
+import { useSignup } from "@/features/auth/api/use-signup";
 
 export const SignUpCard = () => {
-   const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
+   const { mutate } = useSignup();
+
+   const form = useForm<z.infer<typeof signupSchema>>({
+      resolver: zodResolver(signupSchema),
       defaultValues: {
          name: "",
          email: "",
@@ -41,8 +40,8 @@ export const SignUpCard = () => {
       },
    });
 
-   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-      console.log(data);
+   const onSubmit = async (data: z.infer<typeof signupSchema>) => {
+      mutate({ json: data });
    };
    
    return (
