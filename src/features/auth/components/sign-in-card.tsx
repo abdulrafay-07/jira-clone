@@ -87,7 +87,7 @@ export const SignInCard = () => {
                         </FormItem>
                      )}
                   />
-                  <Button disabled={false} size="lg" className="w-full">
+                  <Button size="lg" className="w-full">
                      Login
                   </Button>
                </form>
