@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
@@ -29,7 +31,7 @@ import { signupSchema } from "@/features/auth/schema";
 import { useSignup } from "@/features/auth/api/use-signup";
 
 export const SignUpCard = () => {
-   const { mutate } = useSignup();
+   const { mutate, isPending } = useSignup();
 
    const form = useForm<z.infer<typeof signupSchema>>({
       resolver: zodResolver(signupSchema),
@@ -115,7 +117,7 @@ export const SignUpCard = () => {
                         </FormItem>
                      )}
                   />
-                  <Button size="lg" className="w-full">
+                  <Button disabled={isPending} size="lg" className="w-full">
                      Sign Up
                   </Button>
                </form>
