@@ -42,7 +42,7 @@ export const SignUpCard = () => {
       },
    });
 
-   const onSubmit = async (data: z.infer<typeof signupSchema>) => {
+   const onSubmit = (data: z.infer<typeof signupSchema>) => {
       mutate({ json: data });
    };
    

@@ -40,7 +40,7 @@ export const SignInCard = () => {
       },
    });
 
-   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+   const onSubmit = (data: z.infer<typeof loginSchema>) => {
       mutate({ json: data });
    };
 

@@ -3,7 +3,9 @@ import { Inter } from "next/font/google"
 
 import "./globals.css";
 
+import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/components/query-provider";
+
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -29,6 +31,7 @@ export default function RootLayout({
         )}
       >
         <QueryProvider>
+          <Toaster />
           {children}
         </QueryProvider>
       </body>
