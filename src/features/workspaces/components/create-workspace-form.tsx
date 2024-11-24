@@ -33,6 +33,7 @@ import { ImageIcon } from "lucide-react";
 
 import { createWorkspaceSchema } from "@/features/workspaces/schema";
 import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspace";
+import { cn } from "@/lib/utils";
 
 interface CreateWorkspaceFormProps {
    onCancel?: () => void;
@@ -170,6 +171,7 @@ export const CreateWorkspaceForm = ({
                         variant="secondary"
                         onClick={onCancel}
                         disabled={isPending}
+                        className={cn(!onCancel && "invisible")}
                      >
                         Cancel
                      </Button>
