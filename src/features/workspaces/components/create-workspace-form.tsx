@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,6 +43,8 @@ export const CreateWorkspaceForm = ({
 }: CreateWorkspaceFormProps) => {
    const { mutate, isPending } = useCreateWorkspace();
 
+   const router = useRouter();
+
    const inputRef = useRef<HTMLInputElement>(null);
 
    const form = useForm<z.infer<typeof createWorkspaceSchema>>({
@@ -58,9 +61,10 @@ export const CreateWorkspaceForm = ({
       };
 
       mutate({ form: finalData }, {
-         onSuccess: () => {
+         onSuccess: ({ data }) => {
             form.reset();
-            // TODO: redirect to new workspace
+
+            router.push(`/workspaces/${data.$id}`);
          },
       });
    };
