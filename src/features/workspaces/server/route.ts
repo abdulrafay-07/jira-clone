@@ -1,12 +1,13 @@
-import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
+import { Hono } from "hono";
 import { ID, Query } from "node-appwrite";
 
-import { sessionMiddleware } from "@/lib/session-middleware";
-import { createWorkspaceSchema } from "@/features/workspaces/schema";
-import { MemberRole } from "@/features/members/types";
-import { generateInviteCode } from "@/lib/utils";
 import { DATABASE_ID, IMAGES_BUCKET_ID, MEMBERS_ID, WORKSPACE_ID } from "@/config";
+import { MemberRole } from "@/features/members/types";
+import { getMember } from "@/features/members/utils";
+import { createWorkspaceSchema, updateWorkspaceSchema } from "@/features/workspaces/schema";
+import { sessionMiddleware } from "@/lib/session-middleware";
+import { generateInviteCode } from "@/lib/utils";
 
 const app = new Hono()
    .get("/", sessionMiddleware, async (c) => {
@@ -71,7 +72,7 @@ const app = new Hono()
             const file = await storage.createFile(
                IMAGES_BUCKET_ID,
                ID.unique(),
-               reconstructedFile, // Upload the reconstructed file object
+               reconstructedFile, // upload the reconstructed file object
             );
    
             const arrayBuffer = await storage.getFilePreview(
@@ -104,6 +105,75 @@ const app = new Hono()
             workspaceId: workspace.$id,
             role: MemberRole.ADMIN,
          },
+      );
+
+      return c.json({ data: workspace });
+   })
+   .patch("/:workspaceId", zValidator("form", updateWorkspaceSchema), sessionMiddleware, async (c) => {
+      const databases = c.get("databases");
+      const storage = c.get("storage");
+      const user = c.get("user");
+
+      const { workspaceId } = c.req.param();
+
+      const { name, image } = c.req.valid("form");
+
+      const member = await getMember({
+         databases,
+         workspaceId,
+         userId: user.$id,
+      });
+
+      if (!member || member.role !== MemberRole.ADMIN) {
+         return c.json({ error: "Unauthorized" }, 401);
+      };
+
+      let uploadedImageUrl: string | undefined;
+
+      if (image) {
+         if (image instanceof File) {
+            const file = await storage.createFile(
+               IMAGES_BUCKET_ID,
+               ID.unique(),
+               image,
+            );
+   
+            const arrayBuffer = await storage.getFilePreview(
+               IMAGES_BUCKET_ID,
+               file.$id,
+            );
+   
+            uploadedImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+         } else if (typeof image === "object") {
+            const reconstructedFile = new File(
+               [Buffer.from(await image.arrayBuffer())],
+               "uploaded-file.jpg",
+               { type: image.type }
+            );
+   
+            const file = await storage.createFile(
+               IMAGES_BUCKET_ID,
+               ID.unique(),
+               reconstructedFile, // upload the reconstructed file object
+            );
+   
+            const arrayBuffer = await storage.getFilePreview(
+               IMAGES_BUCKET_ID,
+               file.$id,
+            );
+   
+            uploadedImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+         };
+      };
+
+      const workspace = await databases.updateDocument(
+         DATABASE_ID,
+         WORKSPACE_ID,
+         workspaceId,
+         {
+            name,
+            imageUrl: uploadedImageUrl,
+         }
       );
 
       return c.json({ data: workspace });
