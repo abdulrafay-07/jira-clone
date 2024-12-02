@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { getCurrent } from "@/features/auth/queries";
-import { getProject } from "@/features/projects/queries";
-import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { Button } from "@/components/ui/button";
+import { getCurrent } from "@/features/auth/queries";
+import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import { getProject } from "@/features/projects/queries";
+import { TaskViewSwitcher } from "@/features/tasks/components/task-view-switcher";
 
 import { PencilIcon } from "lucide-react";
 
@@ -51,6 +52,7 @@ export default async function ProjectId({
                </Button>
             </div>
          </div>
+         <TaskViewSwitcher />
       </div>
    )
 };
