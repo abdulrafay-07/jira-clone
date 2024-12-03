@@ -14,8 +14,8 @@ import { sessionMiddleware } from "@/lib/session-middleware";
 const app = new Hono()
    .get("/", zValidator("query", z.object({
       workspaceId: z.string(),
-      projectId: z.string(),
-      assigneeId: z.string(),
+      projectId: z.string().nullish(),
+      assigneeId: z.string().nullish(),
       status: z.nativeEnum(TaskStatus).nullish(),
       search: z.string().nullish(),
       dueDate: z.string().nullish(),
