@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { TaskStatus } from "@/features/tasks/types";
 
-interface UseGetProjectsProps {
+interface UseGetTasksProps {
    workspaceId: string;
    projectId?: string | null;
    assigneeId?: string | null;
@@ -19,7 +19,7 @@ export const useGetTasks = ({
    status,
    dueDate,
    search,
-}: UseGetProjectsProps) => {
+}: UseGetTasksProps) => {
    const query = useQuery({
       queryKey: ["tasks",
          workspaceId,
@@ -42,7 +42,7 @@ export const useGetTasks = ({
          });
 
          if (!response.ok) {
-            throw new Error("Failed to fetch projects");
+            throw new Error("Failed to fetch tasks");
          };
 
          const { data } = await response.json();
