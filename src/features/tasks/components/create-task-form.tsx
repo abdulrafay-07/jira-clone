@@ -44,12 +44,14 @@ interface CreateTaskFormProps {
    onCancel?: () => void;
    projectOptions: { id: string, name: string, imageUrl: string }[];
    memberOptions: { id: string, name: string }[];
+   status: TaskStatus | string;
 };
 
 export const CreateTaskForm = ({
    onCancel,
    projectOptions,
    memberOptions,
+   status,
 }: CreateTaskFormProps) => {
    const { mutate, isPending } = useCreateTask();
    const workspaceId = useWorkspaceId();
@@ -60,6 +62,7 @@ export const CreateTaskForm = ({
       resolver: zodResolver(createTaskSchema),
       defaultValues: {
          workspaceId,
+         status: status != "" ? status as TaskStatus : undefined,
       },
    });
 

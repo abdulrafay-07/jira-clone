@@ -8,6 +8,7 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { DataFilter } from "@/features/tasks/components/data-filters";
 import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
 import { DataTable } from "@/features/tasks/components/data-table";
+import { DataKanban } from "@/features/tasks/components/data-kanban";
 import { columns } from "@/features/tasks/components/columns";
 
 import { DottedSeparator } from "@/components/dotted-separator";
@@ -96,7 +97,7 @@ export const TaskViewSwitcher = () => {
                      <DataTable columns={columns} data={tasks?.documents ?? []} />
                   </TabsContent>
                   <TabsContent value="kanban" className="mt-0">
-                     {JSON.stringify(tasks)}
+                     <DataKanban data={tasks?.documents ?? []} />
                   </TabsContent>
                   <TabsContent value="calendar" className="mt-0">
                      {JSON.stringify(tasks)}
