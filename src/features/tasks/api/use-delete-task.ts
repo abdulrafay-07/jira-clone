@@ -33,7 +33,7 @@ export const useDeleteTask = () => {
          queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
       },
       onError: () => {
-         toast.error("Failed to Task project");
+         toast.error("Failed to delete task");
       },
    });
 

@@ -1,5 +1,7 @@
 "use client"
 
+import { useCallback } from "react";
+
 import { useQueryState } from "nuqs";
 
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
@@ -7,9 +9,11 @@ import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { DataFilter } from "@/features/tasks/components/data-filters";
 import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
+import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 import { DataTable } from "@/features/tasks/components/data-table";
 import { DataKanban } from "@/features/tasks/components/data-kanban";
 import { columns } from "@/features/tasks/components/columns";
+import { TaskStatus } from "@/features/tasks/types";
 
 import { DottedSeparator } from "@/components/dotted-separator";
 import {
@@ -32,6 +36,7 @@ export const TaskViewSwitcher = () => {
       dueDate,
       search,
    }] = useTaskFilters();
+   const { mutate: bulkUpdate } = useBulkUpdateTasks();
 
    const workspaceId = useWorkspaceId();
    
@@ -44,6 +49,14 @@ export const TaskViewSwitcher = () => {
       dueDate,
       search,
    });
+
+   const onKanbanChange = useCallback((tasks: { $id: string; status: TaskStatus, position: number }[]) => {
+      bulkUpdate({
+         json: {
+            tasks,
+         },
+      });
+   }, []);
 
    return (
       <Tabs
@@ -97,7 +110,7 @@ export const TaskViewSwitcher = () => {
                      <DataTable columns={columns} data={tasks?.documents ?? []} />
                   </TabsContent>
                   <TabsContent value="kanban" className="mt-0">
-                     <DataKanban data={tasks?.documents ?? []} />
+                     <DataKanban data={tasks?.documents ?? []} onChange={onKanbanChange} />
                   </TabsContent>
                   <TabsContent value="calendar" className="mt-0">
                      {JSON.stringify(tasks)}

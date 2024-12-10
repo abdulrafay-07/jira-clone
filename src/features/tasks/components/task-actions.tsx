@@ -39,6 +39,7 @@ export const TaskActions = ({
       const ok = await confirm();
       if (!ok) return;
 
+
       mutate({ param: { taskId: id } });
    };
 
