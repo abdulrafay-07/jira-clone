@@ -12,6 +12,7 @@ import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 import { DataTable } from "@/features/tasks/components/data-table";
 import { DataKanban } from "@/features/tasks/components/data-kanban";
+import { DataCalendar } from "@/features/tasks/components/data-calendar";
 import { columns } from "@/features/tasks/components/columns";
 import { TaskStatus } from "@/features/tasks/types";
 
@@ -113,7 +114,7 @@ export const TaskViewSwitcher = () => {
                      <DataKanban data={tasks?.documents ?? []} onChange={onKanbanChange} />
                   </TabsContent>
                   <TabsContent value="calendar" className="mt-0">
-                     {JSON.stringify(tasks)}
+                     <DataCalendar data={tasks?.documents ?? []} />
                   </TabsContent>
                </>
             )}
