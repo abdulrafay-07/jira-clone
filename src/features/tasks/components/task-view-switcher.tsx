@@ -26,7 +26,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader, PlusIcon } from "lucide-react";
 
-export const TaskViewSwitcher = () => {
+interface TaskViewSwitcherProps {
+   hideProjectFilter?: boolean;
+};
+
+export const TaskViewSwitcher = ({
+   hideProjectFilter,
+}: TaskViewSwitcherProps) => {
    const [view, setView] = useQueryState("task-view", {
       defaultValue: "table",
    });
@@ -98,7 +104,7 @@ export const TaskViewSwitcher = () => {
             </div>
             <DottedSeparator className="my-4" />
             
-            <DataFilter />
+            <DataFilter hideProjectFilter={hideProjectFilter} />
 
             <DottedSeparator className="my-4" />
             {isLoadingTasks ? (

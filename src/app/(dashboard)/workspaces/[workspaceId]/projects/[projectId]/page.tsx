@@ -52,7 +52,7 @@ export default async function ProjectId({
                </Button>
             </div>
          </div>
-         <TaskViewSwitcher />
+         <TaskViewSwitcher hideProjectFilter />
       </div>
    )
 };
