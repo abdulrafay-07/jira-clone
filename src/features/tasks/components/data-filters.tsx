@@ -1,6 +1,6 @@
 import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
 import { useGetMembers } from "@/features/members/api/use-get-members";
-import { useGetProjects } from "@/features/projects/api/use-get-project";
+import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 import { TaskStatus } from "@/features/tasks/types";

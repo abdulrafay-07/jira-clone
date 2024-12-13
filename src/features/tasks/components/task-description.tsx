@@ -27,6 +27,10 @@ export const TaskDescription = ({
          param: {
             taskId: task.$id,
          },
+      }, {
+         onSuccess: () => {
+            setIsEditing(false);
+         }
       });
    };
 

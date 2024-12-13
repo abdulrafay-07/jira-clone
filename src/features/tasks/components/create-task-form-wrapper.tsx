@@ -1,5 +1,5 @@
 import { useGetMembers } from "@/features/members/api/use-get-members";
-import { useGetProjects } from "@/features/projects/api/use-get-project";
+import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { CreateTaskForm } from "@/features/tasks/components/create-task-form";
 import { TaskStatus } from "@/features/tasks/types";
