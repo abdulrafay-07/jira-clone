@@ -6,7 +6,7 @@ import { Query } from "node-appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { createAdminClient } from "@/lib/appwrite";
 import { getMember } from "@/features/members/utils";
-import { MemberRole } from "@/features/members/types";
+import { Member, MemberRole } from "@/features/members/types";
 import { DATABASE_ID, MEMBERS_ID } from "@/config";
 
 const app = new Hono();
@@ -27,7 +27,7 @@ export default app
 
       if (!member) return c.json({ error: "Unauthorized" }, 401);
 
-      const members = await databases.listDocuments(
+      const members = await databases.listDocuments<Member>(
          DATABASE_ID,
          MEMBERS_ID,
          [
