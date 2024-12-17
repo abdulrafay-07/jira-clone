@@ -28,6 +28,7 @@ import { FaGithub } from "react-icons/fa";
 
 import { loginSchema } from "@/features/auth/schema";
 import { useLogin } from "@/features/auth/api/use-login";
+import { signUpWithGithub } from "@/lib/oauth";
 
 export const SignInCard = () => {
    const { mutate, isPending } = useLogin();
@@ -99,11 +100,7 @@ export const SignInCard = () => {
             <DottedSeparator />
          </div>
          <CardContent className="p-7 flex flex-col gap-y-4">
-            <Button disabled={false} variant="secondary" size="lg" className="w-full">
-               <FcGoogle className="mr-2 size-5" />
-               Login with Google
-            </Button>
-            <Button disabled={false} variant="secondary" size="lg" className="w-full">
+            <Button onClick={() => signUpWithGithub()} disabled={false} variant="secondary" size="lg" className="w-full">
                <FaGithub className="mr-2 size-5" />
                Login with GitHub
             </Button>
