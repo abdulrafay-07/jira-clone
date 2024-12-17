@@ -4,17 +4,18 @@ import { useCallback } from "react";
 
 import { useQueryState } from "nuqs";
 
-import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
+import { TaskStatus } from "@/features/tasks/types";
+import { columns } from "@/features/tasks/components/columns";
 import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { DataFilter } from "@/features/tasks/components/data-filters";
-import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 import { DataTable } from "@/features/tasks/components/data-table";
 import { DataKanban } from "@/features/tasks/components/data-kanban";
+import { DataFilter } from "@/features/tasks/components/data-filters";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import { DataCalendar } from "@/features/tasks/components/data-calendar";
-import { columns } from "@/features/tasks/components/columns";
-import { TaskStatus } from "@/features/tasks/types";
+import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
 
 import { DottedSeparator } from "@/components/dotted-separator";
 import {
@@ -46,11 +47,12 @@ export const TaskViewSwitcher = ({
    const { mutate: bulkUpdate } = useBulkUpdateTasks();
 
    const workspaceId = useWorkspaceId();
+   const paramProjectId = useProjectId();
    
    const { open } = useCreateTaskModal();
    const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
       workspaceId,
-      projectId,
+      projectId: paramProjectId || projectId,
       assigneeId,
       status,
       dueDate,
@@ -96,7 +98,7 @@ export const TaskViewSwitcher = ({
                <Button
                   size="sm"
                   className="w-full lg:w-auto"
-                  onClick={open}
+                  onClick={() => open()}
                >
                   <PlusIcon className="size-4" />
                   New

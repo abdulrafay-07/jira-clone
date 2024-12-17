@@ -7,11 +7,12 @@ import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { TaskStatus } from "@/features/tasks/types";
 import { Project } from "@/features/projects/types";
+import { Member } from "@/features/members/types";
 
 interface EventCardProps {
    id: string;
    title: string;
-   assignee: any;
+   assignee: Member;
    project: Project;
    status: TaskStatus;
 };

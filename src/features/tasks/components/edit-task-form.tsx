@@ -1,7 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -36,7 +34,6 @@ import { MemberAvatar } from "@/features/members/components/member-avatar";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { useUpdateTask } from "@/features/tasks/api/use-update-task";
 import { createTaskSchema } from "@/features/tasks/schema";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { Task, TaskStatus } from "@/features/tasks/types";
 import { cn } from "@/lib/utils";
 
@@ -54,9 +51,6 @@ export const EditTaskForm = ({
    memberOptions,
 }: EditTaskFormProps) => {
    const { mutate, isPending } = useUpdateTask();
-   const workspaceId = useWorkspaceId();
-
-   const router = useRouter();
 
    const form = useForm<z.infer<typeof createTaskSchema>>({
       resolver: zodResolver(createTaskSchema.omit({ workspaceId: true, description: true })),

@@ -1,7 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -55,8 +53,6 @@ export const CreateTaskForm = ({
 }: CreateTaskFormProps) => {
    const { mutate, isPending } = useCreateTask();
    const workspaceId = useWorkspaceId();
-
-   const router = useRouter();
 
    const form = useForm<z.infer<typeof createTaskSchema>>({
       resolver: zodResolver(createTaskSchema),

@@ -44,7 +44,6 @@ export const DataFilter = ({
       assigneeId,
       status,
       dueDate,
-      search,
    }, setFilters] = useTaskFilters();
 
    const onStatusChange = (value: string) => {

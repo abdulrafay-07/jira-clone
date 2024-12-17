@@ -10,7 +10,6 @@ import {
 import { KanbanColumnHeader } from "@/features/tasks/components/kanban-column-header";
 import { KanbanCard } from "@/features/tasks/components/kanban-card";
 import { Task, TaskStatus } from "@/features/tasks/types";
-import { sources } from "next/dist/compiled/webpack/webpack";
 
 const boards: TaskStatus[] = [
    TaskStatus.BACKLOG,
@@ -80,7 +79,7 @@ export const DataKanban = ({
       const sourceStatus = source.droppableId as TaskStatus;
       const destinationStatus = destination.droppableId as TaskStatus;
 
-      let updatesPayload: { $id: string, status: TaskStatus, position: number }[];
+      let updatesPayload: { $id: string, status: TaskStatus, position: number }[] = [];
 
       setTasks((prevTasks) => {
          const newTasks = { ...prevTasks };
