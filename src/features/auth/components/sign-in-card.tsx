@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { DottedSeparator } from "@/components/dotted-separator";
+import { Button } from "@/components/ui/button";
 import {
    Card,
    CardContent,
@@ -21,13 +22,11 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
-import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
-import { loginSchema } from "@/features/auth/schema";
 import { useLogin } from "@/features/auth/api/use-login";
+import { loginSchema } from "@/features/auth/schema";
 import { signUpWithGithub } from "@/lib/oauth";
 
 export const SignInCard = () => {
